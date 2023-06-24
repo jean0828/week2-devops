@@ -258,3 +258,10 @@ disp  |  * Debugger PIN: 112-266-209
 ```
 
 ## You can find a link to the Docker Compose tutorial https://docs.docker.com/compose/gettingstarted/
+
+## Scaling the services
+
+to scale each service to 2 replicas we have to:
+```
+docker-compose up -d --scale web1=2 --scale web2=2
+```

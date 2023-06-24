@@ -2,13 +2,31 @@ version: "3.7"
 services:
   web1:
     build: ./quote_gen
-    container_name: gen
-    ports:
-      - "5000:5000"
-  web2:
-    build: ./quote_disp
-    container_name: disp
-    ports:
-      - "5001:5001"
+    #container_name: gen
+    hostname: gen
+    expose:
+      - "5000"
+  nginx-web1:
+    image: nginx:latest
+    volumes:
+      - ./nginx1.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - web1
+    ports:
+      - "4000:4000"
+  web2:
+    build: ./quote_disp
+    #container_name: disp
+    hostname: disp
+    expose:
+      - "5001"
+    depends_on:
+      - web1
+  nginx-web2:
+    image: nginx:latest
+    volumes:
+      - ./nginx2.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - web2
+    ports:
+      - "4001:4001"
